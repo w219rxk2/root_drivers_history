@@ -1,5 +1,7 @@
 package com.root.insurance.drivinghistroy.utility;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -97,10 +99,11 @@ public class TrackDrivingHistoryUtil
 	 * 
 	 * @param driverAttributes
 	 */
-	public String[] printDriverHistoryFile() {
+	public Driver[] printDriverHistoryFile() {
 		
 		int size = drivers.size();
-		String[] outputFileArray = new String[size];
+		String[] outputFileAr = new String[size];
+		Driver[] driverSorted  = new Driver[size];
 		int outputFileInc = 0;
 		
 		Set<DriverKey> driverKeys = drivers.keySet();
@@ -110,6 +113,7 @@ public class TrackDrivingHistoryUtil
 			double totalMiles = 0;
 			double totalHours    = 0;
 			Driver driver = drivers.get(dk);
+			Driver d = null;
 			
 			if(driver.getSchedule() != null) {
 				
@@ -132,9 +136,12 @@ public class TrackDrivingHistoryUtil
 							
 							int t = endMinutes - startMinutes;
 							double hours  = Double.valueOf(t)/ 60;
+							long speed = Math.round(entry.getValue()/hours);
+							if( speed >= 5 && speed <= 100) {
+								totalHours = totalHours + hours;
+								totalMiles = totalMiles + entry.getValue();
+							}
 							
-							totalHours = totalHours + hours;
-							totalMiles = totalMiles + entry.getValue();
 						}else {
 							// not a valid record since end time is not after the start time.
 						}
@@ -147,24 +154,26 @@ public class TrackDrivingHistoryUtil
 			
 			long speed = Math.round(totalMiles/totalHours);
 			
-			if(speed >= 5 && speed <= 100) {
-				// Alex: 42 miles @ 34 mph
-				StringBuilder outputString  = new StringBuilder();
-				outputString.append(driver.getName());
-				outputString.append(": ");
-				outputString.append(Math.round(totalMiles));
-				outputString.append(" miles");
-				if(totalHours != 0) {
-					outputString.append(" @ ");
-					outputString.append(Math.round(totalMiles/totalHours));
-					outputString.append(" mph");
-				}
+			// Alex: 42 miles @ 34 mph
+			d = new Driver();
+			d.setName(driver.getName());
+			d.setTotalHours(totalHours);
+			d.setTotalMiles(totalMiles);
+			driverSorted[outputFileInc] = d;
 				
-				outputFileArray[outputFileInc] = outputString.toString();
-				outputFileInc++;
-			}
+			outputFileInc++;
 		}
-		return outputFileArray;
+		
+		// custom sort on basis of total miles.
+		Arrays.sort(driverSorted, new Comparator<Driver>() {
+
+			@Override
+			public int compare(Driver o1, Driver o2) {
+				//sort Employee on basis of totalMiles(ascending order)
+			    return new Double(o1.getTotalMiles()).compareTo(new Double(o2.getTotalMiles()));
+			}
+		});
+		return driverSorted;
 	}
 	
 	/**

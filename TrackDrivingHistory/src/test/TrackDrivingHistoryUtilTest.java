@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import com.root.insurance.drivinghistory.dto.Driver;
 import com.root.insurance.drivinghistory.exception.CustomDriverInvalidException;
 import com.root.insurance.drivinghistroy.utility.TrackDrivingHistoryUtil;
 
@@ -25,22 +26,21 @@ class TrackDrivingHistoryUtilTest {
 			ts.toggleMode(driverData);
 		}
 		
-		String[] output = {"Dan: 39 miles @ 47 mph", "Alex: 42 miles @ 34 mph", "Bob: 0 miles"};
+		String[] output = {"Bob: 0 miles",  "Dan: 39 miles @ 47 mph", "Alex: 42 miles @ 34 mph" };
 		
-		String[] deliveryFile = ts.printDriverHistoryFile();
+		Driver[] driversFile = ts.printDriverHistoryFile();
 		
-		assertEquals(output.length, deliveryFile.length);
+		assertEquals(output.length, driversFile.length);
 		
-		for(int i =0; i < deliveryFile.length; i++) {
+		for(int i =driversFile.length -1; i >= 0; i--) {
 			String actualString = output[i];
-			String extectedString = deliveryFile[i];
+			Driver driver = driversFile[i];
 			
 			String[] actualSplit = actualString.split(" ");
-			String[] extectedSplit = extectedString.split(" ");
 			
-			assertEquals(actualSplit[1], extectedSplit[1]);
+			assertEquals(actualSplit[1], String.valueOf(Math.round(driver.getTotalMiles())));
 			if(actualSplit.length > 3) {
-				assertEquals(actualSplit[4], extectedSplit[4]);
+				assertEquals(actualSplit[4], String.valueOf(Math.round(driver.getTotalMiles()/driver.getTotalHours())));
 			}
 		}
 	}

@@ -14,6 +14,8 @@ public class Driver implements Serializable
 	
 	private String name;
 	private Map<Schedule,Double> schedule;
+	private double totalHours;
+	private double totalMiles;
 	
 	public String getName() {
 		return name;
@@ -26,5 +28,33 @@ public class Driver implements Serializable
 	}
 	public void setSchedule(Map<Schedule, Double> schedule) {
 		this.schedule = schedule;
+	}
+	public double getTotalHours() {
+		return totalHours;
+	}
+	public void setTotalHours(double totalHours) {
+		this.totalHours = totalHours;
+	}
+	public double getTotalMiles() {
+		return totalMiles;
+	}
+	public void setTotalMiles(double totalMiles) {
+		this.totalMiles = totalMiles;
+	}
+	
+	@Override
+	public String toString() {
+		
+		StringBuilder outputString  = new StringBuilder();
+		outputString.append(this.name);
+		outputString.append(": ");
+		outputString.append(Math.round(totalMiles));
+		outputString.append(" miles");
+		if(totalHours != 0) {
+			outputString.append(" @ ");
+			outputString.append(Math.round(totalMiles/totalHours));
+			outputString.append(" mph");
+		}
+		return outputString.toString();
 	}
 }
