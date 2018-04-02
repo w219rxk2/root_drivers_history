@@ -1,0 +1,58 @@
+// This Application reads in the drivers data file.
+	1. saves the driver in to Map object if the line starts with Driver(since I'm not using a repository).
+	2. adds the miles, start time and end time for the existing drivers
+
+Note:  
+1. Avoid trips for the driver that doesn't exist as the driver should be subscribed first to make a valid trip.
+2. Skip records without mentioned attributes like
+			{
+				empty line : (),
+				line without required attribute to define a new driver : (if record identifier is not mentioned such as (Driver, Trip))
+				Doesn't allow records having end time less than start time
+				Skip drivers having speed less than 5 and speed more than 100
+				Skip records if the time is not in the correct format.
+			}
+ 
+This Application is developed on Java platform.
+
+it uses FileStream API to read and write the files.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Testing with file
+
+To test it place the input file in src folder(/TrackDrivingHistory/src/Driving_History.txt),
+once you execute the application application will write the file to same locaion with name "Driving_History_Output.txt".
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Environment Setup
+
+Since it requires Java to run the code.
+
+Following are the steps to set up the environment.
+
+Java SE is freely available on http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html. You can download a version based on your operating system.
+
+Follow the instructions to download Java and run the .exe to install Java on your machine. 
+Once you installed Java on your machine, you will need to set environment variables to point to correct installation directories −
+
+Setting Up the Path for Windows
+Assuming you have installed Java in c:\Program Files\java\jdk directory −
+
+Right-click on 'My Computer' and select 'Properties'.
+
+Click the 'Environment variables' button under the 'Advanced' tab.
+
+Now, alter the 'Path' variable so that it also contains the path to the Java executable. Example, if the path is currently set to 'C:\WINDOWS\SYSTEM32', then change your path to read 'C:\WINDOWS\SYSTEM32;c:\Program Files\java\jdk\bin'.
+
+Setting Up the Path for Linux, UNIX
+Environment variable PATH should be set to point to where the Java binaries have been installed. Refer to your shell documentation, if you have trouble doing this.
+
+Example, if you use bash as your shell, then you would add the following line to the end of your '.bashrc: export PATH = /path/to/java:$PATH'
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Install an IDE (Eclipse, NetBeans, IntelliJ)
+import the project (file -> import -> Existing project into workspace -> give the directory) and click finish.
+
+Happy Coding :)

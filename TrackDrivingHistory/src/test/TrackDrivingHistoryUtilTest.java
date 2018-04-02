@@ -22,7 +22,7 @@ class TrackDrivingHistoryUtilTest {
 		TrackDrivingHistoryUtil ts = new TrackDrivingHistoryUtil();
 		
 		for(String driverData : input) {
-			ts.filterMode(driverData);
+			ts.toggleMode(driverData);
 		}
 		
 		String[] output = {"Dan: 39 miles @ 47 mph", "Alex: 42 miles @ 34 mph", "Bob: 0 miles"};
@@ -58,7 +58,7 @@ class TrackDrivingHistoryUtilTest {
 		TrackDrivingHistoryUtil ts = new TrackDrivingHistoryUtil();
 		
 		for(String content : driverData) {
-			ts.filterMode(content);
+			ts.toggleMode(content);
 		}
 		
 		int size = ts.getDrivers().size();

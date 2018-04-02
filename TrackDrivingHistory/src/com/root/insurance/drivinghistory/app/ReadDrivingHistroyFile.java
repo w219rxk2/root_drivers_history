@@ -23,10 +23,6 @@ public class ReadDrivingHistroyFile {
 	 * This method is used to read and write the driving history.
 	 * 
 	 * @param inputFile
-	 * @throws IOException
-	 * @throws CustomFileNotFoundExcepion 
-	 * @throws CustomIOException 
-	 * @throws CustomDriverInvalidException 
 	 */
 	public static void readAndWriteDriversHistory(BufferedReader inputFile) throws CustomIOException, CustomFileNotFoundExcepion 
 	{
@@ -38,7 +34,7 @@ public class ReadDrivingHistroyFile {
 		try {
 			while ((line = inputFile.readLine()) != null) 
 			{
-			  trackDrivingHistoryUtil.filterMode(line);
+			  trackDrivingHistoryUtil.toggleMode(line);
 			}
 		} catch (IOException e1) {
 			throw new CustomIOException("error while reading the file.");
@@ -61,7 +57,7 @@ public class ReadDrivingHistroyFile {
 	// Driver class
 	public static void main(String[] args) throws CustomFileNotFoundExcepion {
 		
-		try(FileInputStream fileStream = new FileInputStream("src/Driving_History.txt")) 
+		try(FileInputStream fileStream = new FileInputStream(args.length > 0 ? args[0] : "src/Driving_Data.txt")) 
 		{
 			BufferedReader bufferedStream = new BufferedReader(new InputStreamReader(fileStream));
 			readAndWriteDriversHistory(bufferedStream);

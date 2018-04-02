@@ -24,7 +24,7 @@ public class TrackDrivingHistoryUtil
 	 * 
 	 * @param character stream of lines.
 	 */
-	public void filterMode(String content)
+	public void toggleMode(String content)
 	{
 		String[] attributes = content.split("\\s+");
 		
@@ -145,20 +145,24 @@ public class TrackDrivingHistoryUtil
 				
 			}
 			
-			// Alex: 42 miles @ 34 mph
-			StringBuilder outputString  = new StringBuilder();
-			outputString.append(driver.getName());
-			outputString.append(": ");
-			outputString.append(Math.round(totalMiles));
-			outputString.append(" miles");
-			if(totalHours != 0) {
-				outputString.append(" @ ");
-				outputString.append(Math.round(totalMiles/totalHours));
-				outputString.append(" mph");
-			}
+			long speed = Math.round(totalMiles/totalHours);
 			
-			outputFileArray[outputFileInc] = outputString.toString();
-			outputFileInc++;
+			if(speed >= 5 && speed <= 100) {
+				// Alex: 42 miles @ 34 mph
+				StringBuilder outputString  = new StringBuilder();
+				outputString.append(driver.getName());
+				outputString.append(": ");
+				outputString.append(Math.round(totalMiles));
+				outputString.append(" miles");
+				if(totalHours != 0) {
+					outputString.append(" @ ");
+					outputString.append(Math.round(totalMiles/totalHours));
+					outputString.append(" mph");
+				}
+				
+				outputFileArray[outputFileInc] = outputString.toString();
+				outputFileInc++;
+			}
 		}
 		return outputFileArray;
 	}
